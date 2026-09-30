@@ -1,0 +1,29 @@
+Project: day13-k4-l3b-02594
+Prompt: day13-chat (text), variables: feature, docs, message
+
+Baseline v1
+Label: baseline
+Correlation ID: req-a4144c2b
+Trace ID: e48b7e94c1088a373b8e8c768fd66319
+Metadata: prompt_source=langfuse, prompt_label=baseline, prompt_version=1
+Generation: claude-sonnet-4-5, input=33 tokens, output=112 tokens, cost=$0.001779
+
+Candidate v2
+Label: candidate
+Correlation ID: req-1615d18f
+Trace ID: bfeca807bba8c18f7af321f6b761a323
+Metadata: prompt_source=langfuse, prompt_label=candidate, prompt_version=2
+Generation: claude-sonnet-4-5, input=48 tokens, output=103 tokens, cost=$0.001689
+
+Promote production to v2
+Correlation ID: req-e2706bce
+Trace ID: 1e253a0128e308c4db62bbe9875a2752
+Metadata: prompt_source=langfuse, prompt_label=production, prompt_version=2
+
+Rollback production to v1
+Correlation ID: req-abf90371
+Trace ID: 59e5bedb57f5b5e7199febf07d3bf23d
+Metadata: prompt_source=langfuse, prompt_label=production, prompt_version=1
+Final Langfuse pointer: production -> v1; candidate -> v2
+
+All four root/retrieval/generation trace trees have empty input/output fields.

@@ -1,0 +1,5 @@
+CP3 run time: 2026-09-30 05:02–05:03 UTC
+Langfuse message: Prompt 'day13-chat-label:production' not found.
+HTTP status: 404 (LangfuseNotFoundError)
+Effect: app used the configured local fallback; CP3 trace metadata recorded prompt_source=local-fallback, prompt_version=local-v1.
+Follow-up: day13-chat v1/v2 were created afterward; CP2 baseline, candidate, promote, and rollback traces now report prompt_source=langfuse.

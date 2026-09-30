@@ -70,6 +70,7 @@ def test_langfuse_prompt_version_and_label_are_resolved(monkeypatch) -> None:
 
     monkeypatch.setenv("LANGFUSE_PROMPT_NAME", "day13-incident-assistant")
     monkeypatch.setenv("LANGFUSE_PROMPT_LABEL", "candidate")
+    monkeypatch.setenv("LANGFUSE_PROMPT_FETCH_TIMEOUT_SECONDS", "12")
     client = RecordingPromptClient()
 
     resolved = resolve_prompt(
@@ -87,7 +88,7 @@ def test_langfuse_prompt_version_and_label_are_resolved(monkeypatch) -> None:
             "type": "text",
             "fallback": DEFAULT_PROMPT_TEMPLATE,
             "cache_ttl_seconds": 60,
-            "fetch_timeout_seconds": 2,
+            "fetch_timeout_seconds": 12,
             "max_retries": 0,
         },
     )

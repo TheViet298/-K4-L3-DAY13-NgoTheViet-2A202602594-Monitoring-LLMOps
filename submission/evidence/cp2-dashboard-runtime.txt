@@ -1,0 +1,14 @@
+Command: python scripts/dashboard.py
+URL: http://127.0.0.1:8765
+Rolling window: 2026-09-30 09:29–10:28 UTC (60 minutes)
+Refresh: 30 seconds
+Structured records: 12
+Panels: latency, traffic, errors/retrieval success, cost, tokens, quality
+Latency P50/P95/P99: 1102/1925/1925 ms
+TTFT P95: 50 ms
+Error rate: 0.00%
+Retrieval success: 100.00%
+Cost: $0.0080
+Input/output tokens: 162/504
+Mean quality: 0.800
+Thresholds displayed: latency P95 3000 ms; error rate 2%; retrieval success 90%; cost $2.50; tokens 50000; quality 0.75

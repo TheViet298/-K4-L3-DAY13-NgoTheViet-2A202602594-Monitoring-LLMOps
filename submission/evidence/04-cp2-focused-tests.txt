@@ -1,0 +1,6 @@
+Command: python -m pytest -q tests/test_agent_prompt_trace.py tests/test_dashboard_validator.py
+Date: 2026-09-30
+Result: 11 passed in 1.84s
+
+Coverage includes child observation creation, absence of raw input/output fields,
+and retrieval-success aggregation over response_sent and request_failed events.

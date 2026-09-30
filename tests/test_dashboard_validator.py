@@ -33,6 +33,55 @@ def test_repository_dashboard_contract_is_valid() -> None:
     assert "6/6 panel" in result.stdout
 
 
+def test_retrieval_success_uses_success_and_failure_events() -> None:
+    payload = yaml.safe_load(
+        (REPO_ROOT / "config" / "dashboard.yaml").read_text(encoding="utf-8")
+    )
+    errors_panel = next(
+        panel for panel in payload["dashboard"]["panels"] if panel["id"] == "errors"
+    )
+
+    assert {"response_sent", "request_failed"} <= set(errors_panel["events"])
+    assert "tool_success == true" in errors_panel["query"]
+    assert "tool_success != null" in errors_panel["query"]
+
+
+def test_runtime_dashboard_renders_six_panels_and_retrieval_success() -> None:
+    from datetime import datetime, timezone
+
+    from scripts.dashboard import build_dashboard, render
+
+    timestamp = datetime(2026, 9, 30, 10, 29, tzinfo=timezone.utc)
+    records = [
+        {"_time": timestamp, "event": "request_received"},
+        {
+            "_time": timestamp,
+            "event": "response_sent",
+            "latency_ms": 3100,
+            "ttft_ms": 80,
+            "cost_usd": 0.01,
+            "tokens_in": 20,
+            "tokens_out": 30,
+            "quality_score": 0.8,
+            "tool_success": True,
+        },
+        {"_time": timestamp, "event": "request_received"},
+        {"_time": timestamp, "event": "request_failed", "tool_success": False},
+    ]
+
+    data = build_dashboard(records, now=datetime(2026, 9, 30, 10, 30, tzinfo=timezone.utc))
+    error_panel = next(panel for panel in data["panels"] if panel["id"] == "errors")
+    page = render(data)
+
+    assert len(data["panels"]) == 6
+    assert error_panel["summary"] == [
+        ("Error rate", "50.00%"),
+        ("Retrieval success", "50.00%"),
+    ]
+    assert page.count('<section class="panel"') == 6
+    assert "refresh 30 seconds" in page
+
+
 def test_validator_rejects_panel_without_threshold(tmp_path: Path) -> None:
     payload = yaml.safe_load(
         (REPO_ROOT / "config" / "dashboard.yaml").read_text(encoding="utf-8")
